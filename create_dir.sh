@@ -56,9 +56,31 @@ elif [[ $1 == "ADNI" ]]; then
 #creates all sub-session directories
 	find ${R_D_PATH} -maxdepth 2 -mindepth 2 -type d | awk -F '/' '{print $6 "/ses-" $7}' | awk -F '_' '{print $1 "-" $2}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/II/dwi '$BIDS_DIR$1'/II/anat'
 
+#for ADNI-PreQual
+elif [[ $1 == "ADNI-PreQual" ]]; then
+	R_D_PATH="${RAW_DIR}${1}/"
+
+#creates all subject directories
+	find ${R_D_PATH} -maxdepth 1 -mindepth 1 -type d | awk -F '/' '{print $6}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-II'
+	echo "Created all subject diectories."
+#creates all session directories
+	echo "Now creating session directories..."
+	find ${R_D_PATH} -maxdepth 2 -mindepth 2 -type d | awk -F '/' '{print "sub-" $6 "/ses-" $7}' | awk -F '_' '{print $1 "-" $2}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/II' 
+	echo "Finished creating session directories."
+#creates all sub-session directories
+	echo "Now creating sub-session directories..."
+	find ${R_D_PATH} -maxdepth 2 -mindepth 2 -type d | awk -F '/' '{print "sub-" $6 "/ses-" $7}' | awk -F '_' '{print $1 "-" $2}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/II/dwi '$BIDS_DIR$1'/II/anat'
+	echo "finished creating subsession directories."
 
 fi
 rmdir ${BIDS_DIR}$1
+
+
+
+
+
+
+
 
 
 
