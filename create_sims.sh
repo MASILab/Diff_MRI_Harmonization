@@ -52,11 +52,11 @@ if [[ $1 == "OASIS3" ]]; then
 
 #first do the dataset_description.json files
         #WORKS
-        find ${R_D_PATH} -maxdepth 3 -mindepth 3 -type f | head -n 1 | awk -F '/' '{print $7 "/" $8 "/" $9}' | xargs -I II sh -c 'ln -s '$R_D_PATH'II '$B_D_PATH'II'
+        find ${R_D_PATH} -maxdepth 3 -mindepth 3 -type f | awk -F '/' '{print $7 "/" $8 "/" $9}' | xargs -I II sh -c 'ln -s '$R_D_PATH'II '$B_D_PATH'II'
 
 #next, do all the anat, dwi, fmap, func files
         #WORKS
-        find ${R_D_PATH} -maxdepth 4 -mindepth 4 -type f | head -n 1 | awk -F '/' '{print $7 "/" $8 "/" $9 "/" $10}' | xargs -I II sh -c 'ln -s '$R_D_PATH'II '$B_D_PATH'II'
+        find ${R_D_PATH} -maxdepth 4 -mindepth 4 -type f | awk -F '/' '{print $7 "/" $8 "/" $9 "/" $10}' | xargs -I II sh -c 'ln -s '$R_D_PATH'II '$B_D_PATH'II'
 
 
 
