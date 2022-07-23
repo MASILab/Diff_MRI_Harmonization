@@ -52,7 +52,7 @@ def ADNI_dwi_symlinks(raw_dir):
         bids_ses_list = str(dwi_file.parent.name).split('_')   
         bids_ses_name = "ses-" + bids_ses_list[0] + "-" + bids_ses_list[1]   #reconstructing session name into BIDS format
         bids_filename = sub_name + "_" + bids_ses_name + "_" + filename #name of symlink in BIDS directory
-        bids_path = "/nfs2/harmonization/BIDS/ADNI/" + sub_name + "/" + bids_ses_name + "/anat/" + bids_filename #full path for BIDS symlink
+        bids_path = "/nfs2/harmonization/BIDS/ADNI/" + sub_name + "/" + bids_ses_name + "/dwi/" + bids_filename #full path for BIDS symlink
         print("ln -s " + str(dwi_file) + " " + str(bids_path))
     print("echo 'Done creating symlinks for dwi files'")
 
