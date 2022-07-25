@@ -35,8 +35,18 @@ BIDS_DIR="/nfs2/harmonization/BIDS/"
 #makes the new directory
 mkdir ${BIDS_DIR}$1
 
+
+#for HCP
+if [[ $1 == "HCP" ]]; then
+	R_D_D_PATH="/nfs/HCP/data/" #path to raw subject directories
+	
+#create all subject directories and subdirectories
+	find ${R_D_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $5 "/"}' | xargs -I II sh -c 'echo mkdir '$BIDS_DIR$1'/sub-IIMNINonLinear '$BIDS_DIR$1'/sub-IIanat '$BIDS_DIR$1'/sub-IIdwi '$BIDS_DIR$1'/sub-IIswi '$BIDS_DIR$1'/sub-IIfunc'
+
+
+
 #for OASIS3
-if [[ $1 == "OASIS3" ]]; then
+elif [[ $1 == "OASIS3" ]]; then
 	R_D_D_PATH="${RAW_DIR}${1}/database/" #path to raw subject directories
 #create all subject directories and session directories
 #WORKS
