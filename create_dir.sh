@@ -41,9 +41,11 @@ if [[ $1 == "HCP" ]]; then
 	R_D_D_PATH="/nfs/HCP/data/" #path to raw subject directories
 	
 #create all subject directories and subdirectories
-	find ${R_D_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $5 "/"}' | xargs -I II sh -c 'echo mkdir '$BIDS_DIR$1'/sub-IIMNINonLinear '$BIDS_DIR$1'/sub-IIanat '$BIDS_DIR$1'/sub-IIdwi '$BIDS_DIR$1'/sub-IIswi '$BIDS_DIR$1'/sub-IIfunc'
+	mkdir $BIDS_DIR$1'/data/' $BIDS_DIR$1'/derivatives/'
+	find ${R_D_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $5 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/data/sub-II '$BIDS_DIR$1'/data/sub-IIanat '$BIDS_DIR$1'/data/sub-IIdwi '$BIDS_DIR$1'/data/sub-IIfunc'
 
-
+#creating the derivatives subdirectories
+	find ${R_D_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $5 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-II '$BIDS_DIR$1'/derivatives/sub-IIanat '$BIDS_DIR$1'/derivatives/sub-IIdwi '$BIDS_DIR$1'/derivatives/sub-IIfunc '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/fsaverage_LR32k '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/Meta '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/Results '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/xfms '$BIDS_DIR$1'/derivatives/sub-IIdwi/eddylogs'
 
 #for OASIS3
 elif [[ $1 == "OASIS3" ]]; then
