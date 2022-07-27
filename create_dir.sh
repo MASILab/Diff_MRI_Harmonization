@@ -52,13 +52,13 @@ if [[ $1 == "HCP" ]]; then
 
 #for HCPD
 elif [[ $1 == "HCPD" ]];then
-	R_D_PATH="/nfs/HPCD/"
+	R_D_PATH="/nfs/HCPD/"
 
 #create all subject directories
-	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'echo mkdir '$BIDS_DIR$1'/sub-II'
+	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-II'
 	echo 'Done with subject directories. Now creating subdirectories...'
 #create all subdirectories
-	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'echo mkdir '$BIDS_DIR$1'/sub-II/dwi '$BIDS_DIR$1'/sub-II/anat'
+	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-IIdwi '$BIDS_DIR$1'/sub-IIanat'
 	echo 'Done creating subdirectories'
 
 #for OASIS3
