@@ -27,9 +27,13 @@ validator = BIDSValidator()
 
 #BIDS Validator requires that paths be starting from the dataset, not the root
     #i.e. "/sub-XXXX/..." not "/nfs2/harmonization/BIDS/ADNI/sub-XXXX/..."
+file_num = 0
 for f in dir_path.rglob('*'):
+    if not f.is_file(): #the BIDS_Validator is only checking files
+        continue
+    file_num += 1
     path = ""
-    while f.name != dir_path.stem and f.name != "":
+    while f.name != dir_path.stem and f.name != "": #this loop constructs the path from the dataset
         #print(f.name)
         if f.is_dir():
             path = f.name + "/" + path
@@ -40,10 +44,12 @@ for f in dir_path.rglob('*'):
     #print(path)
     if not validator.is_bids(path):
         print("{} is not a valid BIDS name. Dataset {} is not BIDS formatted.".format(path, dir_path.stem))
-        #exit(0)
+        exit(0)
     else:
-        print("{} is a valid path".format(path))
-print("{} is a valid BIDS formatted dataset".format(dir_path.stem))
+        #print("{} is a valid path".format(path))   #perhaps add this in as a verbose option?
+        continue
+print("***Tested {} files for BIDS formatting. All passed validation.***".format(file_num))
+print("***{} is a valid BIDS formatted dataset.***".format(dir_path.stem))
     
 
 #print("{} is a valid BIDS formatted directory".format(dir_path.name))
