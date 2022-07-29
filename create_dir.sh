@@ -50,16 +50,36 @@ if [[ $1 == "HCP" ]]; then
 	find ${R_D_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $5 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-II '$BIDS_DIR$1'/derivatives/sub-IIanat '$BIDS_DIR$1'/derivatives/sub-IIdwi '$BIDS_DIR$1'/derivatives/sub-IIfunc '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/fsaverage_LR32k '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/Meta '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/Results '$BIDS_DIR$1'/derivatives/sub-IIMNINonLinear/xfms '$BIDS_DIR$1'/derivatives/sub-IIdwi/eddylogs'
 	echo 'Done creating derivatives subdirectories.'
 
+#for HCPA
+elif [[ $1 == "HCPA" ]]; then
+	R_D_PATH="/nfs/HCPA/"
+
+	#creating all subject directories
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-II'
+	echo 'Done with subject directories. Now creating subdirectories...'
+	#create all subdirectories
+	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-IIdwi '$BIDS_DIR$1'/sub-IIanat'
+	echo 'Done creating subdirectories. Now creating derivatives...'
+	#creating derivatives
+	mkdir $BIDS_DIR$1/derivatives
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | grep -v "derivatives" | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-II'
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | grep -v "derivatives" | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-IIdwi '$BIDS_DIR$1'/derivatives/sub-IIanat'
+
 #for HCPD
 elif [[ $1 == "HCPD" ]];then
 	R_D_PATH="/nfs/HCPD/"
 
 #create all subject directories
-	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-II'
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-II'
 	echo 'Done with subject directories. Now creating subdirectories...'
 #create all subdirectories
 	find $R_D_PATH -mindepth 1 -maxdepth 1 -type d | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/sub-IIdwi '$BIDS_DIR$1'/sub-IIanat'
 	echo 'Done creating subdirectories'
+	#creating derivatives
+	mkdir $BIDS_DIR$1/derivatives
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | grep -v "derivatives" | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-II'
+	find ${R_D_PATH} -mindepth 1 -maxdepth 1 -type d | grep -v "derivatives" | awk -F '/' '{print $4 "/"}' | xargs -I II sh -c 'mkdir '$BIDS_DIR$1'/derivatives/sub-IIdwi '$BIDS_DIR$1'/derivatives/sub-IIanat'
+
 
 #for OASIS3
 elif [[ $1 == "OASIS3" ]]; then
